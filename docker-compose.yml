@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  banking-transaction-app:
+    build: .
+    container_name: banking-transaction-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:+UseG1GC
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M

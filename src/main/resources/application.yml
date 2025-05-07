@@ -1,0 +1,33 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+    min-response-size: 1024
+
+spring:
+  application:
+    name: banking-transaction-app
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,caches
+  endpoint:
+    health:
+      show-details: always
+    caches:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.banking.transactionapp: DEBUG
+    org.springframework.cache: DEBUG
